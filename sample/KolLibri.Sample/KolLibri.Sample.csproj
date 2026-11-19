@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>KolLibri.Sample</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- During development the sample builds against the library project so
+         a change is visible immediately. For a published build swap this for
+         <PackageReference Include="KoLibri.LibKolibri" Version="0.1.0-preview" />. -->
+    <ProjectReference Include="../../src/LibKolibri/LibKolibri.csproj" />
+  </ItemGroup>
+</Project>

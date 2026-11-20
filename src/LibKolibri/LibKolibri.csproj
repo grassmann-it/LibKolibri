@@ -18,8 +18,20 @@
     <TargetPackOnBuild>false</TargetPackOnBuild>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- Inside the KoLibri repository the core is a project reference, so a
+         fresh clone builds without a NuGet feed. Outside the repository the
+         published package is used instead. The path is resolved once, in
+         MSBuild's own working directory. -->
+    <KolArbitrageCoreProject>$(MSBuildThisFileDirectory)../../../KolArbitrage.Core/KolArbitrage.Core.csproj</KolArbitrageCoreProject>
+    <HasKolArbitrageCoreProject Condition="Exists('$(KolArbitrageCoreProject)')">true</HasKolArbitrageCoreProject>
+    <HasKolArbitrageCoreProject Condition="'$(HasKolArbitrageCoreProject)' == ''">false</HasKolArbitrageCoreProject>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="KoLibri.Core" Version="0.1.0-preview" />
+    <ProjectReference Include="$(KolArbitrageCoreProject)"
+                     Condition="'$(HasKolArbitrageCoreProject)' == 'true'" />
+    <PackageReference Include="KoLibri.Core" Version="0.1.0-preview"
+                     Condition="'$(HasKolArbitrageCoreProject)' != 'true'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="\" />
